@@ -71,3 +71,64 @@ restricoes operacionais proximas ao contexto estudado. O segundo, que se torna o
 objetivo principal da pesquisa, e formalizar o problema logistico descrito,
 evidenciar suas particularidades e preparar o terreno para a construcao de um
 modelo capaz de representar essa decisao de forma rigorosa e util para analise.
+
+\subsection{Estrutura do problema e formulacao inicial}
+
+Uma forma natural de representar o problema e tratar cada decisao viavel de
+carregamento como uma viagem candidata. Cada viagem corresponde a um bloco
+contiguo de cargas atendido por um veiculo de determinada classe. A solucao
+consiste, entao, em selecionar um conjunto de viagens que particione toda a
+sequencia fisica disponivel, respeite a disponibilidade da frota e minimize o
+custo total da operacao.
+
+Seja \(N = \{1,\dots,n\}\) o conjunto das cargas, na ordem em que estao
+fisicamente disponiveis, e seja \(K = \{1,\dots,m\}\) o conjunto das classes de
+veiculos. Para cada carga \(t \in N\), definem-se seu peso \(w_t\) e seu
+comprimento \(\ell_t\). Para cada classe \(k \in K\), definem-se a capacidade de
+peso \(W_k\), a capacidade de comprimento \(L_k\), a quantidade disponivel
+\(M_k\) e o frete minimo faturavel \(q_k\).
+
+Para cada bloco contiguo \(i,\dots,j\), com \(1 \le i \le j \le n\), definem-se
+os acumulados
+\[
+\bar{W}_{ij} = \sum_{t=i}^{j} w_t
+\qquad \text{e} \qquad
+\bar{L}_{ij} = \sum_{t=i}^{j} \ell_t.
+\]
+Se o bloco \(i,\dots,j\) for compativel com um veiculo da classe \(k\), define-se
+o custo da viagem candidata como
+\[
+c_{ijk} = \max(\bar{W}_{ij}, q_k),
+\]
+capturando o fato de que a cobranca depende do peso transportado, mas pode ser
+limitada inferiormente por um valor minimo contratual.
+
+Introduz-se a variavel binaria \(x_{ijk}\), igual a 1 quando a classe de
+veiculo \(k\) e usada para transportar o bloco contiguo \(i,\dots,j\), e igual a
+0 caso contrario. Considerando apenas combinacoes viaveis, uma formulacao
+inicial do problema pode ser escrita como:
+
+\begin{align}
+\min \quad & \sum_{(i,j,k)} c_{ijk}\, x_{ijk} \\
+\text{sujeito a} \quad
+& \sum_{(i,j,k):\, i \le t \le j} x_{ijk} = 1
+\quad \forall t \in N \\
+& \sum_{(i,j)} x_{ijk} \le M_k
+\quad \forall k \in K \\
+& x_{ijk} \in \{0,1\}.
+\end{align}
+
+A primeira restricao garante que cada carga apareca exatamente uma vez na
+solucao, o que assegura simultaneamente cobertura total da sequencia e ausencia
+de sobreposicoes. A segunda limita o numero de viagens selecionadas por classe
+de veiculo conforme a disponibilidade da frota. Conceitualmente, trata-se de uma
+formulacao do tipo \emph{set partitioning over intervals}, em que cada coluna
+representa um intervalo contiguo viavel associado a uma classe de veiculo.
+
+Essa formulacao e coerente com a interpretacao central adotada neste trabalho:
+o problema nao e decidir o arranjo interno detalhado da carga dentro do veiculo,
+mas selecionar, entre todas as viagens viaveis, um subconjunto que particione a
+sequencia de forma economicamente eficiente. Ao longo da pesquisa, essa
+formulacao servira como base para refinamentos, experimentos computacionais e
+eventuais conexoes com representacoes alternativas, como modelos em grafo ou
+abordagens de caminho minimo em redes aciclicas.
