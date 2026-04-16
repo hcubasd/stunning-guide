@@ -1,9 +1,73 @@
 \section{Introducao}
 
-Este documento demonstra citacoes no padrao ABNT com suporte ao idioma
-brasileiro. O estudo de transporte multimodal aparece em revisoes de literatura
-como as de \textcite{steadieseifi2014multimodal} e \textcite{crainic1997planning}.
+O planejamento do transporte de cargas constitui um tema classico da Pesquisa
+Operacional, com desdobramentos em problemas de consolidacao, designacao de
+veiculos, dimensionamento de frota e planejamento operacional de embarques.
+Revisoes amplas, como as de \textcite{crainic1997planning} e
+\textcite{steadieseifi2014multimodal}, mostram a extensao desse campo e deixam
+claro que diferentes configuracoes logisticas geram estruturas decisorias
+proprias. Nesse contexto, o presente trabalho parte de uma revisao rapida da
+literatura para posicionar um problema logistico especifico que, embora
+relacionado a decisoes de alocacao de frota, apresenta uma combinacao de
+restricoes operacionais ainda pouco explorada como objeto central de modelagem.
 
-Como exemplo de documento institucional, tambem citamos o
-\textcite{acobrasil2025}. Para referencia normativa brasileira, usamos
-\textcite{contran8822021}.
+A justificativa para essa revisao rapida e direta. Antes de aprofundar a
+formulacao matematica do problema, e necessario verificar como a literatura vem
+tratando decisoes de atribuicao entre cargas e veiculos em contextos nos quais
+ha restricoes de sequenciamento fisico, heterogeneidade de frota e impacto
+economico associado ao uso parcial da capacidade dos equipamentos. Assim, a
+revisao nao constitui o produto final do estudo, mas sim uma etapa de
+delimitacao conceitual: ela orienta a definicao do problema, ajuda a identificar
+lacunas e sustenta a transicao para a etapa principal da pesquisa, centrada no
+desenvolvimento e na analise de um modelo de Pesquisa Operacional.
+
+A motivacao empirica inicial surgiu em operacoes de distribuicao terrestre de
+bobinas de aco importadas no Brasil. De acordo com o \textcite{acobrasil2025},
+o volume de importacoes siderurgicas cresceu de forma expressiva nos ultimos
+anos, e uma parcela relevante desses fluxos e posteriormente distribuida por
+transporte rodoviario. Em muitas operacoes, as bobinas sao descarregadas em
+portos e removidas para recintos alfandegados secundarios, onde permanecem
+armazenadas ate a nacionalizacao e a expedicao. Nesses ambientes, o arranjo
+fisico da carga no patio ou armazem, frequentemente associado a ordem de
+recebimento ou ao processo de armazenagem, induz uma sequencia pratica de acesso
+as unidades. A retirada fora dessa ordem tende a demandar rehandling, elevando
+tempo, custo e risco operacional.
+
+Essa configuracao leva a uma decisao operacional relevante: dada uma sequencia
+de unidades disponiveis para expedicao e uma frota heterogenea, como atribuir
+subsequencias contiguas de cargas aos veiculos disponiveis? Em muitos contratos
+de frete, essa decisao possui consequencias economicas diretas, pois os valores
+pagos dependem nao apenas da tonelagem embarcada, mas tambem de minimos
+faturaveis por tipo de veiculo. Assim, duas atribuicoes distintas podem mover o
+mesmo volume total e, ainda assim, produzir custos operacionais bastante
+diferentes.
+
+Ao longo do amadurecimento do problema, no entanto, tornou-se claro que a
+motivacao por bobinas de aco descreve apenas um caso particular de uma classe
+mais geral. O elemento estrutural decisivo nao e o tipo de mercadoria em si,
+mas a existencia de cargas para as quais, uma vez atribuida uma subsequencia a
+um determinado veiculo, existe uma unica forma operacionalmente valida de
+carregamento. Em outras palavras, o problema relevante nao inclui um subproblema
+combinatorio adicional de arranjo interno da carga no veiculo: esse arranjo e
+univocamente determinado pelas caracteristicas da carga, pela configuracao do
+equipamento e pelas regras operacionais do contexto.
+
+Essa observacao amplia o alcance da pesquisa. O caso das bobinas continua sendo
+um motivador importante, mas o modelo pretendido busca representar uma classe de
+operacoes logisticas em que: (i) as unidades de carga estao disponiveis em uma
+sequencia fisica de acesso; (ii) a expedicao e feita por uma frota heterogenea;
+(iii) a decisao central consiste em atribuir subsequencias contiguas de carga a
+veiculos; e (iv) o carregamento em cada veiculo e unicamente determinado depois
+da atribuicao. O foco, portanto, desloca-se de uma revisao sistematica sobre um
+tema setorial para uma pesquisa orientada a modelo, informada por uma revisao
+rapida da literatura e fundamentada em uma estrutura decisoria de interesse mais
+geral para a Pesquisa Operacional aplicada a logistica.
+
+Com essa delimitacao, este trabalho passa a perseguir dois objetivos
+complementares. O primeiro e organizar, por meio de uma revisao rapida, o que a
+literatura oferece de mais diretamente relacionado a problemas de alocacao de
+frota, atribuicao de veiculos e planejamento de transporte de cargas com
+restricoes operacionais proximas ao contexto estudado. O segundo, que se torna o
+objetivo principal da pesquisa, e formalizar o problema logistico descrito,
+evidenciar suas particularidades e preparar o terreno para a construcao de um
+modelo capaz de representar essa decisao de forma rigorosa e util para analise.
