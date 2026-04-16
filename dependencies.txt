@@ -1,4 +1,6 @@
 collection-latex
 latexmk
 biblatex
+biblatex-abnt
 biber
+csquotes
