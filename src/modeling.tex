@@ -130,10 +130,81 @@ adicional do problema completo nao decorre da contiguidade nem do calculo dos
 custos de cada bloco, mas da interacao entre decisoes locais de particionamento
 e o consumo global de recursos escassos.
 
-Essa comparacao e util por duas razoes. Primeiro, ela ajuda a organizar a
-estrutura teorica do problema: o modelo inteiro e a formulacao mais fiel ao
-contexto operacional completo, enquanto a programacao dinamica simplificada
-isola a logica sequencial central do problema. Segundo, ela sugere caminhos para
-o desenvolvimento futuro da pesquisa, seja por meio de estados enriquecidos em
-programacao dinamica, seja por reformulacoes em rede, decomposicao ou uso da
-versao simplificada como baseline computacional, heuristica ou limite inferior.
+Essa comparacao e util porque isola exatamente o que falta para recuperar o
+problema completo em uma formulacao sequencial: e necessario enriquecer o estado
+da programacao dinamica com a informacao de consumo da frota. Esse passo leva a
+uma versao completa do DP, apresentada a seguir.
+
+\subsection{Versao completa em programacao dinamica}
+
+A extensao natural da versao simplificada consiste em manter, no estado, nao
+apenas a posicao atual na sequencia, mas tambem quantos veiculos de cada classe
+ja foram utilizados. Com isso, a formulacao sequencial passa a distinguir
+solucoes parciais que cobrem o mesmo prefixo, mas consomem a frota de maneiras
+diferentes.
+
+Defina \(F(p,u_1,\dots,u_m)\) como o menor custo para atender as cargas
+\(p,\dots,n\), supondo cobertas as cargas \(1,\dots,p-1\) e sabendo que
+\(u_k\) veiculos da classe \(k\) ja foram utilizados para cada \(k \in K\). O
+estado informa a primeira carga ainda nao atendida e o uso acumulado dos
+recursos escassos.
+
+Mantem-se o mesmo pre-calculo dos blocos contiguos e dos custos candidatos. Para
+cada bloco \(p,\dots,r\) e cada classe \(k\) viavel, o custo imediato da decisao
+continua sendo \(c_{prk}\). A diferenca esta no fato de que a transicao so e
+permitida quando ainda ha disponibilidade na classe escolhida, isto e, quando
+\(u_k < M_k\).
+
+{\normalcolor
+\[
+F(p,u_1,\dots,u_m) =
+\min_{\substack{r \ge p \\ k \in K \text{ viavel} \\ u_k < M_k}}
+\left\{ c_{prk} + F(p',u_1,\dots,u_k+1,\dots,u_m) \right\},
+\]
+}
+onde \(p' = r+1\) representa a primeira carga ainda nao coberta apos a selecao
+do bloco \(p,\dots,r\). O caso base e dado por
+{\normalcolor
+\[
+F(n+1,u_1,\dots,u_m) = 0,
+\]
+}
+pois nao ha custo adicional quando toda a sequencia ja foi atendida. A solucao
+otima do problema completo e, portanto, obtida em
+\(F(1,0,\dots,0)\).
+
+Como na versao simplificada, a solucao pode ser reconstruida guardando-se, em
+cada estado, qual bloco \(p,\dots,r\) e qual classe \(k\) realizam o minimo. A
+diferenca conceitual e que a sequencia de decisoes passa a incorporar
+explicitamente a evolucao do uso da frota.
+
+Sob a perspectiva estrutural, essa formulacao equivale a um problema de caminho
+minimo com restricoes de recursos. O conjunto de nos deixa de ser composto apenas
+por posicoes da sequencia e passa a ser formado por estados \((p,u_1,\dots,u_m)\).
+Cada arco representa a escolha de um bloco contiguo e de uma classe de veiculo,
+enquanto o recurso controlado corresponde ao numero de veiculos disponiveis em
+cada classe.
+
+Essa versao completa e matematicamente equivalente a formulacao inteira
+apresentada anteriormente. Ambas representam o mesmo conjunto de solucoes
+viaveis e a mesma funcao objetivo; o que muda e apenas a perspectiva de
+modelagem. No modelo inteiro, seleciona-se globalmente um subconjunto de viagens
+candidatas. No DP completo, a mesma decisao e reconstruida de forma sequencial,
+estado por estado, com controle explicito dos recursos.
+
+Ao mesmo tempo, a formulacao evidencia o custo computacional adicional trazido
+pelo controle exato da frota. Enquanto o DP simplificado possui um estado
+unidimensional, o numero de estados da versao completa cresce com
+\(\prod_{k \in K} (M_k + 1)\), multiplicado pelas posicoes da sequencia. Em
+termos qualitativos, isso mostra que a principal fonte de complexidade do
+problema nao esta apenas na particicao da sequencia em blocos contiguos, mas na
+combinacao entre essa particicao e a alocacao de recursos limitados ao longo do
+horizonte decisorio.
+
+Essa comparacao entre as tres formulacoes organiza o espaco analitico da
+pesquisa. O modelo inteiro fornece uma descricao compacta e global do problema
+completo. O DP simplificado isola a logica sequencial central e funciona como
+relaxacao util para analise e para possiveis heuristicas. O DP completo, por sua
+vez, fecha a conexao entre essas duas leituras ao mostrar como a formulacao
+sequencial pode recuperar exatamente o problema original quando o estado passa a
+carregar a informacao necessaria sobre a frota.
