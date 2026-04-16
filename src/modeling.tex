@@ -1,0 +1,131 @@
+\section{Modelagem do Problema}
+
+Nesta secao, a estrutura decisoria introduzida anteriormente e formalizada por
+duas representacoes complementares. A primeira descreve o problema completo
+como um modelo de particionamento de conjuntos sobre intervalos contiguos. A
+segunda apresenta uma versao simplificada em programacao dinamica, util para
+explicitar a logica sequencial do problema e para evidenciar com precisao qual
+parte da dificuldade decorre da restricao global de disponibilidade da frota.
+
+\subsection{Formulacao por particionamento de conjuntos sobre intervalos}
+
+Uma forma natural de representar o problema e tratar cada decisao viavel de
+carregamento como uma viagem candidata. Cada viagem corresponde a um bloco
+contiguo de cargas atendido por um veiculo de determinada classe. A solucao
+consiste, entao, em selecionar um conjunto de viagens que particione toda a
+sequencia fisica disponivel, respeite a disponibilidade da frota e minimize o
+custo total da operacao.
+
+Seja \(N = \{1,\dots,n\}\) o conjunto das cargas, na ordem em que estao
+fisicamente disponiveis, e seja \(K = \{1,\dots,m\}\) o conjunto das classes de
+veiculos. Para cada carga \(t \in N\), definem-se seu peso \(w_t\) e seu
+comprimento \(\ell_t\). Para cada classe \(k \in K\), definem-se a capacidade de
+peso \(W_k\), a capacidade de comprimento \(L_k\), a quantidade disponivel
+\(M_k\) e o frete minimo faturavel \(q_k\).
+
+Para cada bloco contiguo \(i,\dots,j\), com \(1 \le i \le j \le n\), definem-se
+os acumulados
+\[
+\bar{W}_{ij} = \sum_{t=i}^{j} w_t
+\qquad \text{e} \qquad
+\bar{L}_{ij} = \sum_{t=i}^{j} \ell_t.
+\]
+Se o bloco \(i,\dots,j\) for compativel com um veiculo da classe \(k\), define-se
+o custo da viagem candidata como
+\[
+c_{ijk} = \max(\bar{W}_{ij}, q_k),
+\]
+capturando o fato de que a cobranca depende do peso transportado, mas pode ser
+limitada inferiormente por um valor minimo contratual.
+
+Introduz-se a variavel binaria \(x_{ijk}\), igual a 1 quando a classe de
+veiculo \(k\) e usada para transportar o bloco contiguo \(i,\dots,j\), e igual a
+0 caso contrario. Considerando apenas combinacoes viaveis, uma formulacao
+inicial do problema pode ser escrita como:
+
+\begin{align}
+\min \quad & \sum_{(i,j,k)} c_{ijk}\, x_{ijk} \\
+\text{sujeito a} \quad
+& \sum_{(i,j,k):\, i \le t \le j} x_{ijk} = 1
+\quad \forall t \in N \\
+& \sum_{(i,j)} x_{ijk} \le M_k
+\quad \forall k \in K \\
+& x_{ijk} \in \{0,1\}.
+\end{align}
+
+A primeira restricao garante que cada carga apareca exatamente uma vez na
+solucao, o que assegura simultaneamente cobertura total da sequencia e ausencia
+de sobreposicoes. A segunda limita o numero de viagens selecionadas por classe
+de veiculo conforme a disponibilidade da frota. Conceitualmente, trata-se de uma
+formulacao do tipo \emph{set partitioning over intervals}, em que cada coluna
+representa um intervalo contiguo viavel associado a uma classe de veiculo.
+
+\subsection{Versao simplificada em programacao dinamica}
+
+A mesma estrutura tambem pode ser lida de forma recursiva. Em vez de selecionar
+todas as viagens de uma unica vez, constroi-se a solucao da esquerda para a
+direita, sempre fechando a ultima viagem de um prefixo da sequencia. Essa
+interpretacao preserva a logica de particionamento em blocos contiguos, mas
+torna mais transparente a relacao entre a formulacao inteira e uma abordagem em
+programacao dinamica.
+
+Defina \(dp(j)\) como o melhor custo para cobrir exatamente as cargas
+\(1,\dots,j\). O caso base e dado por
+\[
+dp(0) = 0.
+\]
+Para cada posicao \(j\), a ultima viagem da solucao otima para o prefixo
+\(1,\dots,j\) deve necessariamente corresponder a algum bloco contiguo
+\(i,\dots,j\) servido por uma classe de veiculo viavel \(k\). Isso leva a
+recorrencia
+\[
+dp(j) =
+\min_{\substack{1 \le i \le j \\ k \in K \text{ viavel}}}
+\left\{ dp(i-1) + c_{ijk} \right\}.
+\]
+Mantendo-se, para cada \(j\), o par \((i,k)\) que realiza o minimo, a solucao
+completa pode ser reconstruida por retrocesso a partir de \(dp(n)\).
+
+Essa recorrencia mostra de forma explicita a conexao com a formulacao anterior.
+No modelo de particionamento, escolhe-se um subconjunto de viagens candidatas
+que cobre toda a sequencia. Na programacao dinamica simplificada, escolhe-se a
+ultima viagem de cada prefixo e encadeiam-se essas decisoes ate o final. Em
+ambos os casos, os objetos fundamentais sao os mesmos: intervalos contiguos
+viaveis e seus custos associados.
+
+Essa leitura tambem admite uma interpretacao em grafo aciclico. Considerem-se
+os nos \(0,1,\dots,n\), onde cada arco de \(i-1\) para \(j\) representa o bloco
+contiguo \(i,\dots,j\). O custo do arco corresponde ao custo da viagem
+candidata escolhida para esse bloco. Sob essa perspectiva, a recorrencia acima
+equivale a um problema de caminho minimo em rede aciclica.
+
+\subsection{Limites da versao simplificada e relacao entre os modelos}
+
+Apesar de sua clareza estrutural, a programacao dinamica descrita acima nao e
+equivalente ao problema completo quando a disponibilidade de frota e uma
+restricao efetiva. O motivo e direto: o estado \(dp(j)\) registra apenas ate que
+posicao da sequencia se chegou e o melhor custo correspondente, mas nao informa
+quantos veiculos de cada classe ja foram consumidos ao longo da solucao parcial.
+
+Essa omissao e decisiva. Duas solucoes parciais podem cobrir exatamente o mesmo
+prefixo \(1,\dots,j\) com custos semelhantes, mas utilizar a frota de maneiras
+distintas. Se uma delas consome prematuramente uma classe de veiculo escassa,
+ela pode inviabilizar ou encarecer as decisoes futuras, ainda que pareca
+atraente do ponto de vista local. Como o estado simplificado nao distingue essas
+situacoes, a recorrencia trata como equivalentes solucoes parciais que, no
+problema completo, nao o sao.
+
+Consequentemente, a versao simplificada em programacao dinamica resolve de forma
+exata apenas uma relaxacao do modelo inteiro: o caso em que a restricao de frota
+nao existe, e irrelevante, ou nunca se torna ativa. Nessa leitura, a dificuldade
+adicional do problema completo nao decorre da contiguidade nem do calculo dos
+custos de cada bloco, mas da interacao entre decisoes locais de particionamento
+e o consumo global de recursos escassos.
+
+Essa comparacao e util por duas razoes. Primeiro, ela ajuda a organizar a
+estrutura teorica do problema: o modelo inteiro e a formulacao mais fiel ao
+contexto operacional completo, enquanto a programacao dinamica simplificada
+isola a logica sequencial central do problema. Segundo, ela sugere caminhos para
+o desenvolvimento futuro da pesquisa, seja por meio de estados enriquecidos em
+programacao dinamica, seja por reformulacoes em rede, decomposicao ou uso da
+versao simplificada como baseline computacional, heuristica ou limite inferior.
