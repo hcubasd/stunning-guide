@@ -2,7 +2,10 @@ SRC_DIR := src
 BUILD_DIR := build
 DIST_DIR := dist
 TEX_FILE := $(SRC_DIR)/main.tex
+TEX_NAME := main.tex
 PDF_FILE := main.pdf
+TEXLIVE_BIN := $(shell kpsewhich -var-value=SELFAUTOLOC 2>/dev/null)
+LATEXMK := $(if $(TEXLIVE_BIN),$(TEXLIVE_BIN)/latexmk,latexmk)
 
 .PHONY: all install-dependencies build dist deploy clean
 
@@ -13,7 +16,7 @@ install-dependencies:
 
 build:
 	mkdir -p $(BUILD_DIR)
-	pdflatex -interaction=nonstopmode -halt-on-error -output-directory=$(BUILD_DIR) $(TEX_FILE)
+	cd $(SRC_DIR) && PATH="$(PATH):$(TEXLIVE_BIN)" $(LATEXMK) -pdf -interaction=nonstopmode -halt-on-error -outdir=../$(BUILD_DIR) $(TEX_NAME)
 
 dist: build
 	mkdir -p $(DIST_DIR)
