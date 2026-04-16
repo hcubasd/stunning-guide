@@ -1,6 +1,55 @@
 \documentclass[a4paper,12pt]{article}
 
-\input{preamble}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[brazilian]{babel}
+\usepackage{xcolor}
+\usepackage[latte,styleAll]{catppuccinpalette}
+\usepackage{csquotes}
+\usepackage{listings}
+\usepackage{listingsutf8}
+\usepackage{newfloat}
+\usepackage{siunitx}
+\usepackage[subpreambles=true]{standalone}
+\usepackage[
+  backend=biber,
+  style=abnt,
+  language=brazilian
+]{biblatex}
+
+\DeclareFloatingEnvironment[
+  fileext=los,
+  listname={Lista de Strings de Busca},
+  name=String de Busca,
+  placement=htbp
+]{searchstring}
+
+\sisetup{
+  group-digits = integer,
+  group-separator = {.},
+  output-decimal-marker = {,}
+}
+
+\AtEveryCitekey{\color{CtpYellow}}
+\AtEveryBibitem{\color{CtpYellow}}
+
+\lstdefinelanguage{SearchString}{
+  keywords={AND, OR, NOT},
+  string=[b]"
+}
+
+\lstset{
+  inputencoding=utf8/latin1,
+  basicstyle=\ttfamily,
+  showstringspaces=false,
+  keywordstyle=\color{CtpMauve},
+  stringstyle=\color{CtpGreen}
+}
+
+\everymath{\color{CtpPeach}}
+\everydisplay{\color{CtpPeach}}
+
+\addbibresource{references.bib}
 
 \title{Exemplo Modular com Referencias em ABNT}
 \author{Projeto Stunning Guide}
@@ -10,11 +59,11 @@
 
 \maketitle
 
-\input{sections/abstract}
-\input{sections/introduction}
+\input{abstract}
+\input{introduction}
 
 \appendix
-\input{search-strings/search_strings}
+\input{search_strings}
 
 \printbibliography[title={Referencias}]
 
