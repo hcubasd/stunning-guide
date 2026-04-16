@@ -1,0 +1,38 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    container:
+      image: texlive/texlive:latest-small
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v5
+
+      - name: Install TeX dependencies
+        run: sh scripts/install-dependencies.sh
+
+      - name: Build release artifact
+        run: make dist
+
+      - name: Upload workflow artifact
+        uses: actions/upload-artifact@v6
+        with:
+          name: main-pdf-${{ github.ref_name }}
+          path: dist/main.pdf
+
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v3
+        if: github.ref_type == 'tag'
+        with:
+          files: |
+            dist/main.pdf
+            src/main.tex
