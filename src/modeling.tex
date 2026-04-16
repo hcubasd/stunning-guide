@@ -25,24 +25,29 @@ peso \(W_k\), a capacidade de comprimento \(L_k\), a quantidade disponivel
 
 Para cada bloco contiguo \(i,\dots,j\), com \(1 \le i \le j \le n\), definem-se
 os acumulados
+{\normalcolor
 \[
 \bar{W}_{ij} = \sum_{t=i}^{j} w_t
 \qquad \text{e} \qquad
 \bar{L}_{ij} = \sum_{t=i}^{j} \ell_t.
 \]
+}
 Se o bloco \(i,\dots,j\) for compativel com um veiculo da classe \(k\), define-se
 o custo da viagem candidata como
+{\normalcolor
 \[
 c_{ijk} = \max(\bar{W}_{ij}, q_k),
 \]
+}
 capturando o fato de que a cobranca depende do peso transportado, mas pode ser
 limitada inferiormente por um valor minimo contratual.
 
-Introduz-se a variavel binaria \(x_{ijk}\), igual a 1 quando a classe de
+Introduz-se a variavel binaria \(x_{ijk}\), igual a \(1\) quando a classe de
 veiculo \(k\) e usada para transportar o bloco contiguo \(i,\dots,j\), e igual a
-0 caso contrario. Considerando apenas combinacoes viaveis, uma formulacao
+ \(0\) caso contrario. Considerando apenas combinacoes viaveis, uma formulacao
 inicial do problema pode ser escrita como:
 
+{\normalcolor
 \begin{align}
 \min \quad & \sum_{(i,j,k)} c_{ijk}\, x_{ijk} \\
 \text{sujeito a} \quad
@@ -52,6 +57,7 @@ inicial do problema pode ser escrita como:
 \quad \forall k \in K \\
 & x_{ijk} \in \{0,1\}.
 \end{align}
+}
 
 A primeira restricao garante que cada carga apareca exatamente uma vez na
 solucao, o que assegura simultaneamente cobertura total da sequencia e ausencia
@@ -71,18 +77,22 @@ programacao dinamica.
 
 Defina \(dp(j)\) como o melhor custo para cobrir exatamente as cargas
 \(1,\dots,j\). O caso base e dado por
+{\normalcolor
 \[
 dp(0) = 0.
 \]
+}
 Para cada posicao \(j\), a ultima viagem da solucao otima para o prefixo
 \(1,\dots,j\) deve necessariamente corresponder a algum bloco contiguo
 \(i,\dots,j\) servido por uma classe de veiculo viavel \(k\). Isso leva a
 recorrencia
+{\normalcolor
 \[
 dp(j) =
 \min_{\substack{1 \le i \le j \\ k \in K \text{ viavel}}}
 \left\{ dp(i-1) + c_{ijk} \right\}.
 \]
+}
 Mantendo-se, para cada \(j\), o par \((i,k)\) que realiza o minimo, a solucao
 completa pode ser reconstruida por retrocesso a partir de \(dp(n)\).
 
@@ -93,11 +103,9 @@ ultima viagem de cada prefixo e encadeiam-se essas decisoes ate o final. Em
 ambos os casos, os objetos fundamentais sao os mesmos: intervalos contiguos
 viaveis e seus custos associados.
 
-Essa leitura tambem admite uma interpretacao em grafo aciclico. Considerem-se
-os nos \(0,1,\dots,n\), onde cada arco de \(i-1\) para \(j\) representa o bloco
-contiguo \(i,\dots,j\). O custo do arco corresponde ao custo da viagem
-candidata escolhida para esse bloco. Sob essa perspectiva, a recorrencia acima
-equivale a um problema de caminho minimo em rede aciclica.
+Tambem ha uma leitura em rede aciclica. Tomem-se os nos \(0,1,\dots,n\). O arco
+\(i-1 \to j\) representa o bloco \(i,\dots,j\) e recebe o custo da viagem
+correspondente. Assim, a recorrencia equivale a um problema de caminho minimo.
 
 \subsection{Limites da versao simplificada e relacao entre os modelos}
 
