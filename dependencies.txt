@@ -4,3 +4,8 @@ biblatex
 biblatex-abnt
 biber
 csquotes
+standalone
+catppuccinpalette
+siunitx
+pgfopts
+listingsutf8

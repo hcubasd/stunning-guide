@@ -1,18 +1,8 @@
 \documentclass[a4paper,12pt]{article}
 
-\usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}
-\usepackage[brazilian]{babel}
-\usepackage{csquotes}
-\usepackage[
-  backend=biber,
-  style=abnt,
-  language=brazilian
-]{biblatex}
+\input{preamble}
 
-\addbibresource{references.bib}
-
-\title{Exemplo Simples com Referencias em ABNT}
+\title{Exemplo Modular com Referencias em ABNT}
 \author{Projeto Stunning Guide}
 \date{\today}
 
@@ -20,13 +10,11 @@
 
 \maketitle
 
-Este documento demonstra citacoes no padrao ABNT com suporte ao idioma
-brasileiro. O estudo de transporte multimodal aparece em revisoes de literatura
-como as de \textcite{steadieseifi2014multimodal} e \textcite{crainic1997planning}.
+\input{sections/abstract}
+\input{sections/introduction}
 
-Como exemplo de documento institucional, tambem citamos o
-\textcite{acobrasil2025}. Para referencia normativa brasileira, usamos
-\textcite{contran8822021}.
+\appendix
+\input{search-strings/search_strings}
 
 \printbibliography[title={Referencias}]
 
