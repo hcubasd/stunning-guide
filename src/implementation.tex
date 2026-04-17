@@ -1,0 +1,69 @@
+\section{Implementacao do Prototipo e Coleta de Dados}
+
+Com a formulacao completa em programacao dinamica estabelecida, a etapa
+seguinte da pesquisa passou a consistir na construcao de um prototipo
+executavel que permitisse confrontar o modelo com instancias configuradas por
+usuarios em contexto operacional. Essa etapa nao substitui a analise teorica
+anterior; ela a complementa. O prototipo funciona como instrumento de
+transferencia do modelo para uma interface de uso direto e, ao mesmo tempo,
+como mecanismo de coleta estruturada de evidencias empiricas sobre os tipos de
+instancia efetivamente testados e sobre o comportamento computacional do
+algoritmo.
+
+O prototipo foi implementado como uma aplicacao estatica em navegador,
+publicada via GitHub Pages. A interface recebe uma sequencia ordenada de cargas
+e uma frota heterogenea definida por classes de veiculo. Para cada carga, o
+usuario informa os atributos operacionais relevantes; para cada classe de
+veiculo, informa as capacidades e parametros associados ao modelo. A aplicacao
+executa a formulacao completa em programacao dinamica, reconstruindo a
+particao otima da sequencia em blocos contiguos e exibindo a alocacao obtida.
+
+Do ponto de vista de modelagem, o prototipo corresponde diretamente a
+formulacao sequencial completa desenvolvida na secao anterior. Em particular, a
+implementacao considera: (i) a contiguidade dos blocos de carga; (ii) a
+heterogeneidade da frota; (iii) o controle explicito do consumo de classes de
+veiculo quando essa restricao esta ativa; (iv) limites de peso; (v) limites de
+comprimento com espacamento entre unidades; (vi) limites maximos de quantidade
+de unidades por classe; e (vii) a presenca de fretes minimos faturaveis. A
+interface tambem incorpora regras de validacao para impedir configuracoes
+parciais ou semanticamente ambiguas de dados, de modo que a instancia enviada
+ao algoritmo seja coerente com a estrutura do modelo.
+
+O prototipo oferece duas funcoes objetivo de interesse pratico. A primeira
+minimiza o custo total faturado, conforme a estrutura de cobranca definida pelo
+modelo. A segunda minimiza o numero total de viagens, servindo como variacao
+operacional relevante para comparacao de solucoes. Essa duplicidade nao altera
+a estrutura central do problema, mas amplia o potencial de observacao do
+prototipo em testes de campo, pois permite identificar em que situacoes a
+preferencia por custo e a preferencia por quantidade de veiculos conduzem a
+particoes distintas.
+
+Paralelamente ao uso interativo, a aplicacao passou a registrar cada execucao
+de otimizacao em uma base de dados associada ao frontend. O objetivo dessa
+coleta nao e auditar usuarios, mas preservar instancias resolvidas e permitir
+analise posterior do material produzido nos testes. Cada registro armazena, em
+estrutura apropriada para posterior consulta, o objetivo selecionado, os dados
+de entrada das cargas, os dados de entrada das classes de veiculo, a
+configuracao efetiva do modelo ativada naquela execucao, a classificacao da
+instancia como viavel ou inviavel, a solucao reconstruida quando existente, o
+valor da funcao objetivo e medidas resumidas do esforco computacional, como o
+numero de estados explorados.
+
+Essa base viabiliza uma etapa empirica posterior da pesquisa. Com ela, torna-se
+possivel descrever os perfis de instancia efetivamente observados nos testes,
+identificar quais restricoes tendem a ser mais frequentemente ativadas, medir a
+incidencia de infeasibilidade, comparar a frequencia de uso de cada objetivo e
+avaliar, ainda que de forma exploratoria, como o tamanho das instancias e a
+ativacao de diferentes restricoes se relacionam com o esforco computacional da
+programacao dinamica. Em outras palavras, a coleta transforma o prototipo em
+um ambiente de observacao sistematica do modelo em uso.
+
+Com isso, a pesquisa passa a ficar organizada em dois eixos complementares. O
+primeiro eixo, ja desenvolvido neste texto, e teorico-modelador: ele delimita o
+problema, posiciona-o na literatura e constrói as formulacoes relevantes. O
+segundo eixo, em andamento, e empirico-exploratorio: ele combina a aplicacao
+das strings de busca ainda pendentes com os testes vivos do prototipo e com a
+analise da base de execucoes coletadas. A etapa final do trabalho podera,
+portanto, articular a discussao bibliografica expandida com os resultados
+observados no uso real do demonstrador, fechando a conexao entre formulacao,
+implementacao e evidencias empiricas.
