@@ -25,18 +25,22 @@ peso \(W_k\), a capacidade de comprimento \(L_k\), a quantidade disponivel
 
 Para cada bloco contiguo \(i,\dots,j\), com \(1 \le i \le j \le n\), definem-se
 os acumulados
+{
+\everymath{\normalcolor}
 \[
-\normalcolor
 \bar{W}_{ij} = \sum_{t=i}^{j} w_t
 \qquad \text{e} \qquad
 \bar{L}_{ij} = \sum_{t=i}^{j} \ell_t.
 \]
+}
 Se o bloco \(i,\dots,j\) for compativel com um veiculo da classe \(k\), define-se
 o custo da viagem candidata como
+{
+\everymath{\normalcolor}
 \[
-\normalcolor
 c_{ijk} = \max(\bar{W}_{ij}, q_k),
 \]
+}
 capturando o fato de que a cobranca depende do peso transportado, mas pode ser
 limitada inferiormente por um valor minimo contratual.
 
@@ -45,8 +49,9 @@ veiculo \(k\) e usada para transportar o bloco contiguo \(i,\dots,j\), e igual a
  \(0\) caso contrario. Considerando apenas combinacoes viaveis, uma formulacao
 inicial do problema pode ser escrita como:
 
+{
+\everymath{\normalcolor}
 \begin{align*}
-\normalcolor
 \min \quad & \sum_{(i,j,k)} c_{ijk}\, x_{ijk} \\
 \text{sujeito a} \quad
 & \sum_{(i,j,k):\, i \le t \le j} x_{ijk} = 1
@@ -55,6 +60,7 @@ inicial do problema pode ser escrita como:
 \quad \forall k \in K \\
 & x_{ijk} \in \{0,1\}.
 \end{align*}
+}
 
 A primeira restricao garante que cada carga apareca exatamente uma vez na
 solucao, o que assegura simultaneamente cobertura total da sequencia e ausencia
@@ -74,19 +80,23 @@ programacao dinamica.
 
 Defina \(dp(j)\) como o melhor custo para cobrir exatamente as cargas
 \(1,\dots,j\). O caso base e dado por
+{
+\everymath{\normalcolor}
 \[
-\normalcolor
 dp(0) = 0.
 \]
+}
 Para cada posicao \(j\), a ultima viagem da solucao otima para o prefixo
 \(1,\dots,j\) deve necessariamente corresponder a algum bloco contiguo
 \(i,\dots,j\) servido por uma classe de veiculo viavel \(k\). Isso leva a
 recorrencia
+{
+\everymath{\normalcolor}
 \[
-\normalcolor
 dp(j) =
 \min \left\{ dp(i-1) + c_{ijk} : 1 \le i \le j,\ k \in K \text{ viavel} \right\}.
 \]
+}
 Mantendo-se, para cada \(j\), o par \((i,k)\) que realiza o minimo, a solucao
 completa pode ser reconstruida por retrocesso a partir de \(dp(n)\).
 
@@ -149,19 +159,23 @@ continua sendo \(c_{prk}\). A diferenca esta no fato de que a transicao so e
 permitida quando ainda ha disponibilidade na classe escolhida, isto e, quando
 \(u_k < M_k\).
 
+{
+\everymath{\normalcolor}
 \[
-\normalcolor
 \begin{aligned}
 F(p,u_1,\dots,u_m) = \min \Bigl\{\, & c_{prk} + F(p',u_1,\dots,u_k+1,\dots,u_m) : \\
 & r \ge p,\ k \in K \text{ viavel},\ u_k < M_k \Bigr\},
 \end{aligned}
 \]
+}
 onde \(p' = r+1\) representa a primeira carga ainda nao coberta apos a selecao
 do bloco \(p,\dots,r\). O caso base e dado por
+{
+\everymath{\normalcolor}
 \[
-\normalcolor
 F(n+1,u_1,\dots,u_m) = 0,
 \]
+}
 pois nao ha custo adicional quando toda a sequencia ja foi atendida. A solucao
 otima do problema completo e, portanto, obtida em
 \(F(1,0,\dots,0)\).
