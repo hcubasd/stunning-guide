@@ -1,80 +1,80 @@
-\section{Introducao}
+\section{Introdução}
 
-O planejamento do transporte de cargas constitui um tema classico da Pesquisa
-Operacional, com desdobramentos em problemas de consolidacao, designacao de
-veiculos, dimensionamento de frota e planejamento operacional de embarques.
-Revisoes amplas, como as de \textcite{crainic1997planning} e
-\textcite{steadieseifi2014multimodal}, mostram a extensao desse campo e deixam
-claro que diferentes configuracoes logisticas geram estruturas decisorias
-proprias. Nesse contexto, o presente trabalho parte de uma revisao rapida da
-literatura para posicionar um problema logistico especifico que, embora
-relacionado a decisoes de alocacao de frota, apresenta uma combinacao de
-restricoes operacionais ainda pouco explorada como objeto central de modelagem.
+O planejamento do transporte de cargas constitui um tema clássico da Pesquisa
+Operacional, com desdobramentos em problemas de consolidação, designação de
+veículos, dimensionamento de frota e planejamento operacional de embarques.
+Revisões amplas, como as de \textcite{crainic1997planning} e
+\textcite{steadieseifi2014multimodal}, mostram a extensão desse campo e deixam
+claro que diferentes configurações logísticas geram estruturas decisórias
+próprias. Nesse contexto, o presente trabalho parte de uma revisão rápida da
+literatura para posicionar um problema logístico específico que, embora
+relacionado a decisões de alocação de frota, apresenta uma combinação de
+restrições operacionais ainda pouco explorada como objeto central de modelagem.
 
-A justificativa para essa revisao rapida e direta. Antes de aprofundar a
-formulacao matematica do problema, e necessario verificar como a literatura vem
-tratando decisoes de atribuicao entre cargas e veiculos em contextos nos quais
-ha restricoes de sequenciamento fisico, heterogeneidade de frota e impacto
-economico associado ao uso parcial da capacidade dos equipamentos. Assim, a
-revisao nao constitui o produto final do estudo, mas sim uma etapa de
-delimitacao conceitual: ela orienta a definicao do problema, ajuda a identificar
-lacunas e sustenta a transicao para a etapa principal da pesquisa, centrada no
-desenvolvimento e na analise de um modelo de Pesquisa Operacional.
+A justificativa para essa revisão rápida é direta. Antes de aprofundar a
+formulação matemática do problema, é necessário verificar como a literatura vem
+tratando decisões de atribuição entre cargas e veículos em contextos nos quais
+há restrições de sequenciamento físico, heterogeneidade de frota e impacto
+econômico associado ao uso parcial da capacidade dos equipamentos. Assim, a
+revisão não constitui o produto final do estudo, mas sim uma etapa de
+delimitação conceitual: ela orienta a definição do problema, ajuda a identificar
+lacunas e sustenta a transição para a etapa principal da pesquisa, centrada no
+desenvolvimento e na análise de um modelo de Pesquisa Operacional.
 
-A motivacao empirica inicial surgiu em operacoes de distribuicao terrestre de
-bobinas de aco importadas no Brasil. De acordo com o \textcite{acobrasil2025},
-o volume de importacoes siderurgicas cresceu de forma expressiva nos ultimos
-anos, e uma parcela relevante desses fluxos e posteriormente distribuida por
-transporte rodoviario. Em muitas operacoes, as bobinas sao descarregadas em
-portos e removidas para recintos alfandegados secundarios, onde permanecem
-armazenadas ate a nacionalizacao e a expedicao. Nesses ambientes, o arranjo
-fisico da carga no patio ou armazem, frequentemente associado a ordem de
-recebimento ou ao processo de armazenagem, induz uma sequencia pratica de acesso
-as unidades. A retirada fora dessa ordem tende a demandar rehandling, elevando
+A motivação empírica inicial surgiu em operações de distribuição terrestre de
+bobinas de aço importadas no Brasil. De acordo com o \textcite{acobrasil2025},
+o volume de importações siderúrgicas cresceu de forma expressiva nos últimos
+anos, e uma parcela relevante desses fluxos é posteriormente distribuída por
+transporte rodoviário. Em muitas operações, as bobinas são descarregadas em
+portos e removidas para recintos alfandegados secundários, onde permanecem
+armazenadas até a nacionalização e a expedição. Nesses ambientes, o arranjo
+físico da carga no pátio ou armazém, frequentemente associado à ordem de
+recebimento ou ao processo de armazenagem, induz uma sequência prática de acesso
+às unidades. A retirada fora dessa ordem tende a demandar rehandling, elevando
 tempo, custo e risco operacional.
 
-Essa configuracao leva a uma decisao operacional relevante: dada uma sequencia
-de unidades disponiveis para expedicao e uma frota heterogenea, como atribuir
-subsequencias contiguas de cargas aos veiculos disponiveis? Em muitos contratos
-de frete, essa decisao possui consequencias economicas diretas, pois os valores
-pagos dependem nao apenas da tonelagem embarcada, mas tambem de minimos
-faturaveis por tipo de veiculo. Assim, duas atribuicoes distintas podem mover o
+Essa configuração leva a uma decisão operacional relevante: dada uma sequência
+de unidades disponíveis para expedição e uma frota heterogênea, como atribuir
+subsequências contíguas de cargas aos veículos disponíveis? Em muitos contratos
+de frete, essa decisão possui consequências econômicas diretas, pois os valores
+pagos dependem não apenas da tonelagem embarcada, mas também de mínimos
+faturáveis por tipo de veículo. Assim, duas atribuições distintas podem mover o
 mesmo volume total e, ainda assim, produzir custos operacionais bastante
 diferentes.
 
 Ao longo do amadurecimento do problema, no entanto, tornou-se claro que a
-motivacao por bobinas de aco descreve apenas um caso particular de uma classe
-mais geral. O elemento estrutural decisivo nao e o tipo de mercadoria em si,
-mas a existencia de cargas para as quais, uma vez atribuida uma subsequencia a
-um determinado veiculo, existe uma unica forma operacionalmente valida de
-carregamento. Em outras palavras, o problema relevante nao inclui um subproblema
-combinatorio adicional de arranjo interno da carga no veiculo: esse arranjo e
-univocamente determinado pelas caracteristicas da carga, pela configuracao do
+motivação por bobinas de aço descreve apenas um caso particular de uma classe
+mais geral. O elemento estrutural decisivo não é o tipo de mercadoria em si,
+mas a existência de cargas para as quais, uma vez atribuída uma subsequência a
+um determinado veículo, existe uma única forma operacionalmente válida de
+carregamento. Em outras palavras, o problema relevante não inclui um subproblema
+combinatório adicional de arranjo interno da carga no veículo: esse arranjo é
+univocamente determinado pelas características da carga, pela configuração do
 equipamento e pelas regras operacionais do contexto.
 
-Essa observacao amplia o alcance da pesquisa. O caso das bobinas continua sendo
+Essa observação amplia o alcance da pesquisa. O caso das bobinas continua sendo
 um motivador importante, mas o modelo pretendido busca representar uma classe de
-operacoes logisticas em que: (i) as unidades de carga estao disponiveis em uma
-sequencia fisica de acesso; (ii) a expedicao e feita por uma frota heterogenea;
-(iii) a decisao central consiste em atribuir subsequencias contiguas de carga a
-veiculos; e (iv) o carregamento em cada veiculo e unicamente determinado depois
-da atribuicao. O foco, portanto, desloca-se de uma revisao sistematica sobre um
-tema setorial para uma pesquisa orientada a modelo, informada por uma revisao
-rapida da literatura e fundamentada em uma estrutura decisoria de interesse mais
-geral para a Pesquisa Operacional aplicada a logistica.
+operações logísticas em que: (i) as unidades de carga estão disponíveis em uma
+sequência física de acesso; (ii) a expedição é feita por uma frota heterogênea;
+(iii) a decisão central consiste em atribuir subsequências contíguas de carga a
+veículos; e (iv) o carregamento em cada veículo é unicamente determinado depois
+da atribuição. O foco, portanto, desloca-se de uma revisão sistemática sobre um
+tema setorial para uma pesquisa orientada a modelo, informada por uma revisão
+rápida da literatura e fundamentada em uma estrutura decisória de interesse mais
+geral para a Pesquisa Operacional aplicada à logística.
 
-Com essa delimitacao, este trabalho passa a perseguir dois objetivos
-complementares. O primeiro e organizar, por meio de uma revisao rapida, o que a
-literatura oferece de mais diretamente relacionado a problemas de alocacao de
-frota, atribuicao de veiculos e planejamento de transporte de cargas com
-restricoes operacionais proximas ao contexto estudado. O segundo, que se torna o
-objetivo principal da pesquisa, e formalizar o problema logistico descrito,
-evidenciar suas particularidades e preparar o terreno para a construcao e a
-analise de formulacoes matematicas coerentes com essa estrutura decisoria. Como
-desdobramento desse segundo objetivo, o trabalho tambem inclui a implementacao
-de um prototipo computacional da formulacao completa e a preparacao de uma base
-de dados de execucoes, destinada a sustentar a etapa empirica posterior da
-pesquisa. A secao seguinte apresenta essa transicao de modo explicito, primeiro
-por meio de uma formulacao inteira do tipo \emph{set partitioning over
-intervals} e, em seguida, por meio de uma versao simplificada em programacao
-dinamica que ajuda a explicitar a logica sequencial do problema e seus limites.
+Com essa delimitação, este trabalho passa a perseguir dois objetivos
+complementares. O primeiro é organizar, por meio de uma revisão rápida, o que a
+literatura oferece de mais diretamente relacionado a problemas de alocação de
+frota, atribuição de veículos e planejamento de transporte de cargas com
+restrições operacionais próximas ao contexto estudado. O segundo, que se torna o
+objetivo principal da pesquisa, é formalizar o problema logístico descrito,
+evidenciar suas particularidades e preparar o terreno para a construção e a
+análise de formulações matemáticas coerentes com essa estrutura decisória. Como
+desdobramento desse segundo objetivo, o trabalho também inclui a implementação
+de um protótipo computacional da formulação completa e a preparação de uma base
+de dados de execuções, destinada a sustentar a etapa empírica posterior da
+pesquisa. A seção seguinte apresenta essa transição de modo explícito, primeiro
+por meio de uma formulação inteira do tipo \emph{set partitioning over
+intervals} e, em seguida, por meio de uma versão simplificada em programação
+dinâmica que ajuda a explicitar a lógica sequencial do problema e seus limites.

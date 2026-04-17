@@ -1,40 +1,40 @@
 \section{Modelagem do Problema}
 
-Nesta secao, a estrutura decisoria introduzida anteriormente e formalizada por
-duas representacoes complementares. A primeira descreve o problema completo
-como um modelo de particionamento de conjuntos sobre intervalos contiguos. A
-segunda apresenta uma versao simplificada em programacao dinamica, util para
-explicitar a logica sequencial do problema e para evidenciar com precisao qual
-parte da dificuldade decorre da restricao global de disponibilidade da frota.
+Nesta seção, a estrutura decisória introduzida anteriormente é formalizada por
+duas representações complementares. A primeira descreve o problema completo
+como um modelo de particionamento de conjuntos sobre intervalos contíguos. A
+segunda apresenta uma versão simplificada em programação dinâmica, útil para
+explicitar a lógica sequencial do problema e para evidenciar com precisão qual
+parte da dificuldade decorre da restrição global de disponibilidade da frota.
 
-\subsection{Formulacao por particionamento de conjuntos sobre intervalos}
+\subsection{Formulação por particionamento de conjuntos sobre intervalos}
 
-Uma forma natural de representar o problema e tratar cada decisao viavel de
+Uma forma natural de representar o problema é tratar cada decisão viável de
 carregamento como uma viagem candidata. Cada viagem corresponde a um bloco
-contiguo de cargas atendido por um veiculo de determinada classe. A solucao
-consiste, entao, em selecionar um conjunto de viagens que particione toda a
-sequencia fisica disponivel, respeite a disponibilidade da frota e minimize o
-custo total da operacao.
+contíguo de cargas atendido por um veículo de determinada classe. A solução
+consiste, então, em selecionar um conjunto de viagens que particione toda a
+sequência física disponível, respeite a disponibilidade da frota e minimize o
+custo total da operação.
 
-Seja \(N = \{1,\dots,n\}\) o conjunto das cargas, na ordem em que estao
-fisicamente disponiveis, e seja \(K = \{1,\dots,m\}\) o conjunto das classes de
-veiculos. Para cada carga \(t \in N\), associam-se atributos operacionais que
-consomem capacidade quando a carga e atribuida a uma viagem. Em vez de tratar
-cada limitacao separadamente, e conveniente agrupar essas restricoes como
-instancias de uma mesma familia de recursos. Para cada recurso aditivo
+Seja \(N = \{1,\dots,n\}\) o conjunto das cargas, na ordem em que estão
+fisicamente disponíveis, e seja \(K = \{1,\dots,m\}\) o conjunto das classes de
+veículos. Para cada carga \(t \in N\), associam-se atributos operacionais que
+consomem capacidade quando a carga é atribuída a uma viagem. Em vez de tratar
+cada limitação separadamente, é conveniente agrupar essas restrições como
+instâncias de uma mesma família de recursos. Para cada recurso aditivo
 \(r \in R\), seja \(a_{rt}\) o consumo da carga \(t\), e para cada classe
-\(k \in K\), seja \(B_{rk}\) a capacidade disponivel desse recurso em um
-veiculo da classe \(k\).
+\(k \in K\), seja \(B_{rk}\) a capacidade disponível desse recurso em um
+veículo da classe \(k\).
 
-Essa leitura cobre diretamente varias restricoes naturais do problema. Por
-exemplo, o limite de peso e obtido tomando \(a_{\text{peso},t} = w_t\) e
-\(B_{\text{peso},k} = W_k\). De modo analogo, um limite maximo de quantidade de
-unidades por veiculo e representado por \(a_{\text{unid},t} = 1\) para toda
-carga \(t\) e \(B_{\text{unid},k} = U_k\), onde \(U_k\) e o numero maximo de
+Essa leitura cobre diretamente várias restrições naturais do problema. Por
+exemplo, o limite de peso é obtido tomando \(a_{\text{peso},t} = w_t\) e
+\(B_{\text{peso},k} = W_k\). De modo análogo, um limite máximo de quantidade de
+unidades por veículo é representado por \(a_{\text{unid},t} = 1\) para toda
+carga \(t\) e \(B_{\text{unid},k} = U_k\), onde \(U_k\) é o número máximo de
 unidades permitido na classe \(k\). Para cada classe \(k \in K\), definem-se
-tambem a quantidade disponivel \(M_k\) e o frete minimo faturavel \(q_k\).
+também a quantidade disponível \(M_k\) e o frete mínimo faturável \(q_k\).
 
-Para cada bloco contiguo \(i,\dots,j\), com \(1 \le i \le j \le n\), definem-se
+Para cada bloco contíguo \(i,\dots,j\), com \(1 \le i \le j \le n\), definem-se
 os acumulados de recurso
 {
 \everymath{\normalcolor}
@@ -43,7 +43,7 @@ os acumulados de recurso
 \qquad \forall r \in R.
 \]
 }
-Assim, toda restricao estritamente aditiva pode ser escrita de forma uniforme
+Assim, toda restrição estritamente aditiva pode ser escrita de forma uniforme
 como
 {
 \everymath{\normalcolor}
@@ -53,11 +53,11 @@ como
 \]
 }
 
-O limite de comprimento com espacamento entre unidades exige apenas um pequeno
+O limite de comprimento com espaçamento entre unidades exige apenas um pequeno
 ajuste conceitual. Se \(\ell_t\) denota o comprimento da carga \(t\) e
-\(g_k\) representa o espacamento requerido entre cargas consecutivas em um
-veiculo da classe \(k\), entao o comprimento ocupado pelo bloco \(i,\dots,j\)
-na classe \(k\) e dado por
+\(g_k\) representa o espaçamento requerido entre cargas consecutivas em um
+veículo da classe \(k\), então o comprimento ocupado pelo bloco \(i,\dots,j\)
+na classe \(k\) é dado por
 {
 \everymath{\normalcolor}
 \[
@@ -65,10 +65,10 @@ na classe \(k\) e dado por
 = \sum_{t=i}^{j} \ell_t + (j-i)\, g_k.
 \]
 }
-Essa expressao mostra que a restricao de comprimento continua sendo da mesma
+Essa expressão mostra que a restrição de comprimento continua sendo da mesma
 natureza operacional das demais, mas aparece como um caso afim dependente da
-classe, e nao como uma soma puramente aditiva de atributos das cargas. A
-condicao correspondente e
+classe, e não como uma soma puramente aditiva de atributos das cargas. A
+condição correspondente é
 {
 \everymath{\normalcolor}
 \[
@@ -76,10 +76,10 @@ condicao correspondente e
 \]
 }
 
-Portanto, um bloco \(i,\dots,j\) e compativel com a classe \(k\) quando respeita
-simultaneamente todos os limites aditivos relevantes e, quando aplicavel, a
-restricao de comprimento com espacamento. Se o bloco \(i,\dots,j\) for
-compativel com um veiculo da classe \(k\), define-se o custo da viagem
+Portanto, um bloco \(i,\dots,j\) é compatível com a classe \(k\) quando respeita
+simultaneamente todos os limites aditivos relevantes e, quando aplicável, a
+restrição de comprimento com espaçamento. Se o bloco \(i,\dots,j\) for
+compatível com um veículo da classe \(k\), define-se o custo da viagem
 candidata como
 {
 \everymath{\normalcolor}
@@ -87,12 +87,12 @@ candidata como
 c_{ijk} = \max(\bar{A}_{\text{peso},ij}, q_k),
 \]
 }
-capturando o fato de que a cobranca depende do peso transportado, mas pode ser
-limitada inferiormente por um valor minimo contratual.
+capturando o fato de que a cobrança depende do peso transportado, mas pode ser
+limitada inferiormente por um valor mínimo contratual.
 
-Introduz-se a variavel binaria \(x_{ijk}\), igual a \(1\) quando a classe de
-veiculo \(k\) e usada para transportar o bloco contiguo \(i,\dots,j\), e igual a
- \(0\) caso contrario. Considerando apenas combinacoes viaveis, uma formulacao
+Introduz-se a variável binária \(x_{ijk}\), igual a \(1\) quando a classe de
+veículo \(k\) é usada para transportar o bloco contíguo \(i,\dots,j\), e igual a
+ \(0\) caso contrário. Considerando apenas combinações viáveis, uma formulação
 inicial do problema pode ser escrita como:
 
 {
@@ -108,104 +108,104 @@ inicial do problema pode ser escrita como:
 \end{align*}
 }
 
-A primeira restricao garante que cada carga apareca exatamente uma vez na
-solucao, o que assegura simultaneamente cobertura total da sequencia e ausencia
-de sobreposicoes. A segunda limita o numero de viagens selecionadas por classe
-de veiculo conforme a disponibilidade da frota. Conceitualmente, trata-se de uma
-formulacao do tipo \emph{set partitioning over intervals}, em que cada coluna
-representa um intervalo contiguo viavel associado a uma classe de veiculo. A
-viabilidade de cada coluna, por sua vez, e determinada por uma colecao de
-restricoes de recurso do mesmo tipo estrutural, com a restricao de comprimento
-com espacamento aparecendo como extensao natural desse mesmo esquema.
+A primeira restrição garante que cada carga apareça exatamente uma vez na
+solução, o que assegura simultaneamente cobertura total da sequência e ausência
+de sobreposições. A segunda limita o número de viagens selecionadas por classe
+de veículo conforme a disponibilidade da frota. Conceitualmente, trata-se de uma
+formulação do tipo \emph{set partitioning over intervals}, em que cada coluna
+representa um intervalo contíguo viável associado a uma classe de veículo. A
+viabilidade de cada coluna, por sua vez, é determinada por uma coleção de
+restrições de recurso do mesmo tipo estrutural, com a restrição de comprimento
+com espaçamento aparecendo como extensão natural desse mesmo esquema.
 
-\subsection{Versao simplificada em programacao dinamica}
+\subsection{Versão simplificada em programação dinâmica}
 
-A mesma estrutura tambem pode ser lida de forma recursiva. Em vez de selecionar
-todas as viagens de uma unica vez, constroi-se a solucao da esquerda para a
-direita, sempre fechando a ultima viagem de um prefixo da sequencia. Essa
-interpretacao preserva a logica de particionamento em blocos contiguos, mas
-torna mais transparente a relacao entre a formulacao inteira e uma abordagem em
-programacao dinamica.
+A mesma estrutura também pode ser lida de forma recursiva. Em vez de selecionar
+todas as viagens de uma única vez, constrói-se a solução da esquerda para a
+direita, sempre fechando a última viagem de um prefixo da sequência. Essa
+interpretação preserva a lógica de particionamento em blocos contíguos, mas
+torna mais transparente a relação entre a formulação inteira e uma abordagem em
+programação dinâmica.
 
 Defina \(dp(j)\) como o melhor custo para cobrir exatamente as cargas
-\(1,\dots,j\). O caso base e dado por
+\(1,\dots,j\). O caso base é dado por
 {
 \everymath{\normalcolor}
 \[
 dp(0) = 0.
 \]
 }
-Para cada posicao \(j\), a ultima viagem da solucao otima para o prefixo
-\(1,\dots,j\) deve necessariamente corresponder a algum bloco contiguo
-\(i,\dots,j\) servido por uma classe de veiculo viavel \(k\). Isso leva a
-recorrencia
+Para cada posição \(j\), a última viagem da solução ótima para o prefixo
+\(1,\dots,j\) deve necessariamente corresponder a algum bloco contíguo
+\(i,\dots,j\) servido por uma classe de veículo viável \(k\). Isso leva à
+recorrência
 {
 \everymath{\normalcolor}
 \[
 dp(j) =
-\min \left\{ dp(i-1) + c_{ijk} : 1 \le i \le j,\ k \in K \text{ viavel} \right\}.
+\min \left\{ dp(i-1) + c_{ijk} : 1 \le i \le j,\ k \in K \text{ viável} \right\}.
 \]
 }
-Mantendo-se, para cada \(j\), o par \((i,k)\) que realiza o minimo, a solucao
-completa pode ser reconstruida por retrocesso a partir de \(dp(n)\).
+Mantendo-se, para cada \(j\), o par \((i,k)\) que realiza o mínimo, a solução
+completa pode ser reconstruída por retrocesso a partir de \(dp(n)\).
 
-Essa recorrencia mostra de forma explicita a conexao com a formulacao anterior.
+Essa recorrência mostra de forma explícita a conexão com a formulação anterior.
 No modelo de particionamento, escolhe-se um subconjunto de viagens candidatas
-que cobre toda a sequencia. Na programacao dinamica simplificada, escolhe-se a
-ultima viagem de cada prefixo e encadeiam-se essas decisoes ate o final. Em
-ambos os casos, os objetos fundamentais sao os mesmos: intervalos contiguos
-viaveis e seus custos associados.
+que cobre toda a sequência. Na programação dinâmica simplificada, escolhe-se a
+última viagem de cada prefixo e encadeiam-se essas decisões até o final. Em
+ambos os casos, os objetos fundamentais são os mesmos: intervalos contíguos
+viáveis e seus custos associados.
 
-Tambem ha uma leitura em rede aciclica. Tomem-se os nos \(0,1,\dots,n\). O arco
+Também há uma leitura em rede acíclica. Tomem-se os nós \(0,1,\dots,n\). O arco
 \(i-1 \to j\) representa o bloco \(i,\dots,j\) e recebe o custo da viagem
-correspondente. Assim, a recorrencia equivale a um problema de caminho minimo.
+correspondente. Assim, a recorrência equivale a um problema de caminho mínimo.
 
-\subsection{Limites da versao simplificada e relacao entre os modelos}
+\subsection{Limites da versão simplificada e relação entre os modelos}
 
-Apesar de sua clareza estrutural, a programacao dinamica descrita acima nao e
-equivalente ao problema completo quando a disponibilidade de frota e uma
-restricao efetiva. O motivo e direto: o estado \(dp(j)\) registra apenas ate que
-posicao da sequencia se chegou e o melhor custo correspondente, mas nao informa
-quantos veiculos de cada classe ja foram consumidos ao longo da solucao parcial.
+Apesar de sua clareza estrutural, a programação dinâmica descrita acima não é
+equivalente ao problema completo quando a disponibilidade de frota é uma
+restrição efetiva. O motivo é direto: o estado \(dp(j)\) registra apenas até que
+posição da sequência se chegou e o melhor custo correspondente, mas não informa
+quantos veículos de cada classe já foram consumidos ao longo da solução parcial.
 
-Essa omissao e decisiva. Duas solucoes parciais podem cobrir exatamente o mesmo
+Essa omissão é decisiva. Duas soluções parciais podem cobrir exatamente o mesmo
 prefixo \(1,\dots,j\) com custos semelhantes, mas utilizar a frota de maneiras
-distintas. Se uma delas consome prematuramente uma classe de veiculo escassa,
-ela pode inviabilizar ou encarecer as decisoes futuras, ainda que pareca
-atraente do ponto de vista local. Como o estado simplificado nao distingue essas
-situacoes, a recorrencia trata como equivalentes solucoes parciais que, no
-problema completo, nao o sao.
+distintas. Se uma delas consome prematuramente uma classe de veículo escassa,
+ela pode inviabilizar ou encarecer as decisões futuras, ainda que pareça
+atraente do ponto de vista local. Como o estado simplificado não distingue essas
+situações, a recorrência trata como equivalentes soluções parciais que, no
+problema completo, não o são.
 
-Consequentemente, a versao simplificada em programacao dinamica resolve de forma
-exata apenas uma relaxacao do modelo inteiro: o caso em que a restricao de frota
-nao existe, e irrelevante, ou nunca se torna ativa. Nessa leitura, a dificuldade
-adicional do problema completo nao decorre da contiguidade nem do calculo dos
-custos de cada bloco, mas da interacao entre decisoes locais de particionamento
+Consequentemente, a versão simplificada em programação dinâmica resolve de forma
+exata apenas uma relaxação do modelo inteiro: o caso em que a restrição de frota
+não existe, é irrelevante, ou nunca se torna ativa. Nessa leitura, a dificuldade
+adicional do problema completo não decorre da contiguidade nem do cálculo dos
+custos de cada bloco, mas da interação entre decisões locais de particionamento
 e o consumo global de recursos escassos.
 
-Essa comparacao e util porque isola exatamente o que falta para recuperar o
-problema completo em uma formulacao sequencial: e necessario enriquecer o estado
-da programacao dinamica com a informacao de consumo da frota. Esse passo leva a
-uma versao completa do DP, apresentada a seguir.
+Essa comparação é útil porque isola exatamente o que falta para recuperar o
+problema completo em uma formulação sequencial: é necessário enriquecer o estado
+da programação dinâmica com a informação de consumo da frota. Esse passo leva a
+uma versão completa do DP, apresentada a seguir.
 
-\subsection{Versao completa em programacao dinamica}
+\subsection{Versão completa em programação dinâmica}
 
-A extensao natural da versao simplificada consiste em manter, no estado, nao
-apenas a posicao atual na sequencia, mas tambem quantos veiculos de cada classe
-ja foram utilizados. Com isso, a formulacao sequencial passa a distinguir
-solucoes parciais que cobrem o mesmo prefixo, mas consomem a frota de maneiras
+A extensão natural da versão simplificada consiste em manter, no estado, não
+apenas a posição atual na sequência, mas também quantos veículos de cada classe
+já foram utilizados. Com isso, a formulação sequencial passa a distinguir
+soluções parciais que cobrem o mesmo prefixo, mas consomem a frota de maneiras
 diferentes.
 
 Defina \(F(p,u_1,\dots,u_m)\) como o menor custo para atender as cargas
 \(p,\dots,n\), supondo cobertas as cargas \(1,\dots,p-1\) e sabendo que
-\(u_k\) veiculos da classe \(k\) ja foram utilizados para cada \(k \in K\). O
-estado informa a primeira carga ainda nao atendida e o uso acumulado dos
+\(u_k\) veículos da classe \(k\) já foram utilizados para cada \(k \in K\). O
+estado informa a primeira carga ainda não atendida e o uso acumulado dos
 recursos escassos.
 
-Mantem-se o mesmo pre-calculo dos blocos contiguos e dos custos candidatos. Para
-cada bloco \(p,\dots,r\) e cada classe \(k\) viavel, o custo imediato da decisao
-continua sendo \(c_{prk}\). A diferenca esta no fato de que a transicao so e
-permitida quando ainda ha disponibilidade na classe escolhida, isto e, quando
+Mantém-se o mesmo pré-cálculo dos blocos contíguos e dos custos candidatos. Para
+cada bloco \(p,\dots,r\) e cada classe \(k\) viável, o custo imediato da decisão
+continua sendo \(c_{prk}\). A diferença está no fato de que a transição só é
+permitida quando ainda há disponibilidade na classe escolhida, isto é, quando
 \(u_k < M_k\).
 
 {
@@ -213,54 +213,54 @@ permitida quando ainda ha disponibilidade na classe escolhida, isto e, quando
 \[
 \begin{aligned}
 F(p,u_1,\dots,u_m) = \min \Bigl\{\, & c_{prk} + F(p',u_1,\dots,u_k+1,\dots,u_m) : \\
-& r \ge p,\ k \in K \text{ viavel},\ u_k < M_k \Bigr\},
+& r \ge p,\ k \in K \text{ viável},\ u_k < M_k \Bigr\},
 \end{aligned}
 \]
 }
-onde \(p' = r+1\) representa a primeira carga ainda nao coberta apos a selecao
-do bloco \(p,\dots,r\). O caso base e dado por
+onde \(p' = r+1\) representa a primeira carga ainda não coberta após a seleção
+do bloco \(p,\dots,r\). O caso base é dado por
 {
 \everymath{\normalcolor}
 \[
 F(n+1,u_1,\dots,u_m) = 0,
 \]
 }
-pois nao ha custo adicional quando toda a sequencia ja foi atendida. A solucao
-otima do problema completo e, portanto, obtida em
+pois não há custo adicional quando toda a sequência já foi atendida. A solução
+ótima do problema completo é, portanto, obtida em
 \(F(1,0,\dots,0)\).
 
-Como na versao simplificada, a solucao pode ser reconstruida guardando-se, em
-cada estado, qual bloco \(p,\dots,r\) e qual classe \(k\) realizam o minimo. A
-diferenca conceitual e que a sequencia de decisoes passa a incorporar
-explicitamente a evolucao do uso da frota.
+Como na versão simplificada, a solução pode ser reconstruída guardando-se, em
+cada estado, qual bloco \(p,\dots,r\) e qual classe \(k\) realizam o mínimo. A
+diferença conceitual é que a sequência de decisões passa a incorporar
+explicitamente a evolução do uso da frota.
 
-Sob a perspectiva estrutural, essa formulacao equivale a um problema de caminho
-minimo com restricoes de recursos. O conjunto de nos deixa de ser composto apenas
-por posicoes da sequencia e passa a ser formado por estados \((p,u_1,\dots,u_m)\).
-Cada arco representa a escolha de um bloco contiguo e de uma classe de veiculo,
-enquanto o recurso controlado corresponde ao numero de veiculos disponiveis em
+Sob a perspectiva estrutural, essa formulação equivale a um problema de caminho
+mínimo com restrições de recursos. O conjunto de nós deixa de ser composto apenas
+por posições da sequência e passa a ser formado por estados \((p,u_1,\dots,u_m)\).
+Cada arco representa a escolha de um bloco contíguo e de uma classe de veículo,
+enquanto o recurso controlado corresponde ao número de veículos disponíveis em
 cada classe.
 
-Essa versao completa e matematicamente equivalente a formulacao inteira
-apresentada anteriormente. Ambas representam o mesmo conjunto de solucoes
-viaveis e a mesma funcao objetivo; o que muda e apenas a perspectiva de
+Essa versão completa é matematicamente equivalente à formulação inteira
+apresentada anteriormente. Ambas representam o mesmo conjunto de soluções
+viáveis e a mesma função objetivo; o que muda é apenas a perspectiva de
 modelagem. No modelo inteiro, seleciona-se globalmente um subconjunto de viagens
-candidatas. No DP completo, a mesma decisao e reconstruida de forma sequencial,
-estado por estado, com controle explicito dos recursos.
+candidatas. No DP completo, a mesma decisão é reconstruída de forma sequencial,
+estado por estado, com controle explícito dos recursos.
 
-Ao mesmo tempo, a formulacao evidencia o custo computacional adicional trazido
+Ao mesmo tempo, a formulação evidencia o custo computacional adicional trazido
 pelo controle exato da frota. Enquanto o DP simplificado possui um estado
-unidimensional, o numero de estados da versao completa cresce com
-\(\prod_{k \in K} (M_k + 1)\), multiplicado pelas posicoes da sequencia. Em
+unidimensional, o número de estados da versão completa cresce com
+\(\prod_{k \in K} (M_k + 1)\), multiplicado pelas posições da sequência. Em
 termos qualitativos, isso mostra que a principal fonte de complexidade do
-problema nao esta apenas na particicao da sequencia em blocos contiguos, mas na
-combinacao entre essa particicao e a alocacao de recursos limitados ao longo do
-horizonte decisorio.
+problema não está apenas na partição da sequência em blocos contíguos, mas na
+combinação entre essa partição e a alocação de recursos limitados ao longo do
+horizonte decisório.
 
-Essa comparacao entre as tres formulacoes organiza o espaco analitico da
-pesquisa. O modelo inteiro fornece uma descricao compacta e global do problema
-completo. O DP simplificado isola a logica sequencial central e funciona como
-relaxacao util para analise e para possiveis heuristicas. O DP completo, por sua
-vez, fecha a conexao entre essas duas leituras ao mostrar como a formulacao
+Essa comparação entre as três formulações organiza o espaço analítico da
+pesquisa. O modelo inteiro fornece uma descrição compacta e global do problema
+completo. O DP simplificado isola a lógica sequencial central e funciona como
+relaxação útil para análise e para possíveis heurísticas. O DP completo, por sua
+vez, fecha a conexão entre essas duas leituras ao mostrar como a formulação
 sequencial pode recuperar exatamente o problema original quando o estado passa a
-carregar a informacao necessaria sobre a frota.
+carregar a informação necessária sobre a frota.
