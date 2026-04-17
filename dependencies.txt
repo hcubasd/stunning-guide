@@ -3,8 +3,13 @@ latexmk
 biblatex
 biblatex-abnt
 biber
+babel-portuges
+hyphen-portuguese
 csquotes
 catppuccinpalette
 siunitx
 pgfopts
+listings
 listingsutf8
+newfloat
+xpatch

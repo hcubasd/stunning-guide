@@ -18,27 +18,73 @@ custo total da operacao.
 
 Seja \(N = \{1,\dots,n\}\) o conjunto das cargas, na ordem em que estao
 fisicamente disponiveis, e seja \(K = \{1,\dots,m\}\) o conjunto das classes de
-veiculos. Para cada carga \(t \in N\), definem-se seu peso \(w_t\) e seu
-comprimento \(\ell_t\). Para cada classe \(k \in K\), definem-se a capacidade de
-peso \(W_k\), a capacidade de comprimento \(L_k\), a quantidade disponivel
-\(M_k\) e o frete minimo faturavel \(q_k\).
+veiculos. Para cada carga \(t \in N\), associam-se atributos operacionais que
+consomem capacidade quando a carga e atribuida a uma viagem. Em vez de tratar
+cada limitacao separadamente, e conveniente agrupar essas restricoes como
+instancias de uma mesma familia de recursos. Para cada recurso aditivo
+\(r \in R\), seja \(a_{rt}\) o consumo da carga \(t\), e para cada classe
+\(k \in K\), seja \(B_{rk}\) a capacidade disponivel desse recurso em um
+veiculo da classe \(k\).
+
+Essa leitura cobre diretamente varias restricoes naturais do problema. Por
+exemplo, o limite de peso e obtido tomando \(a_{\text{peso},t} = w_t\) e
+\(B_{\text{peso},k} = W_k\). De modo analogo, um limite maximo de quantidade de
+unidades por veiculo e representado por \(a_{\text{unid},t} = 1\) para toda
+carga \(t\) e \(B_{\text{unid},k} = U_k\), onde \(U_k\) e o numero maximo de
+unidades permitido na classe \(k\). Para cada classe \(k \in K\), definem-se
+tambem a quantidade disponivel \(M_k\) e o frete minimo faturavel \(q_k\).
 
 Para cada bloco contiguo \(i,\dots,j\), com \(1 \le i \le j \le n\), definem-se
-os acumulados
+os acumulados de recurso
 {
 \everymath{\normalcolor}
 \[
-\bar{W}_{ij} = \sum_{t=i}^{j} w_t
-\qquad \text{e} \qquad
-\bar{L}_{ij} = \sum_{t=i}^{j} \ell_t.
+\bar{A}_{rij} = \sum_{t=i}^{j} a_{rt}
+\qquad \forall r \in R.
 \]
 }
-Se o bloco \(i,\dots,j\) for compativel com um veiculo da classe \(k\), define-se
-o custo da viagem candidata como
+Assim, toda restricao estritamente aditiva pode ser escrita de forma uniforme
+como
 {
 \everymath{\normalcolor}
 \[
-c_{ijk} = \max(\bar{W}_{ij}, q_k),
+\bar{A}_{rij} \le B_{rk}
+\qquad \forall r \in R,\ \forall (i,j,k) \text{ candidatos}.
+\]
+}
+
+O limite de comprimento com espacamento entre unidades exige apenas um pequeno
+ajuste conceitual. Se \(\ell_t\) denota o comprimento da carga \(t\) e
+\(g_k\) representa o espacamento requerido entre cargas consecutivas em um
+veiculo da classe \(k\), entao o comprimento ocupado pelo bloco \(i,\dots,j\)
+na classe \(k\) e dado por
+{
+\everymath{\normalcolor}
+\[
+\bar{L}_{ijk}
+= \sum_{t=i}^{j} \ell_t + (j-i)\, g_k.
+\]
+}
+Essa expressao mostra que a restricao de comprimento continua sendo da mesma
+natureza operacional das demais, mas aparece como um caso afim dependente da
+classe, e nao como uma soma puramente aditiva de atributos das cargas. A
+condicao correspondente e
+{
+\everymath{\normalcolor}
+\[
+\bar{L}_{ijk} \le L_k.
+\]
+}
+
+Portanto, um bloco \(i,\dots,j\) e compativel com a classe \(k\) quando respeita
+simultaneamente todos os limites aditivos relevantes e, quando aplicavel, a
+restricao de comprimento com espacamento. Se o bloco \(i,\dots,j\) for
+compativel com um veiculo da classe \(k\), define-se o custo da viagem
+candidata como
+{
+\everymath{\normalcolor}
+\[
+c_{ijk} = \max(\bar{A}_{\text{peso},ij}, q_k),
 \]
 }
 capturando o fato de que a cobranca depende do peso transportado, mas pode ser
@@ -67,7 +113,10 @@ solucao, o que assegura simultaneamente cobertura total da sequencia e ausencia
 de sobreposicoes. A segunda limita o numero de viagens selecionadas por classe
 de veiculo conforme a disponibilidade da frota. Conceitualmente, trata-se de uma
 formulacao do tipo \emph{set partitioning over intervals}, em que cada coluna
-representa um intervalo contiguo viavel associado a uma classe de veiculo.
+representa um intervalo contiguo viavel associado a uma classe de veiculo. A
+viabilidade de cada coluna, por sua vez, e determinada por uma colecao de
+restricoes de recurso do mesmo tipo estrutural, com a restricao de comprimento
+com espacamento aparecendo como extensao natural desse mesmo esquema.
 
 \subsection{Versao simplificada em programacao dinamica}
 
